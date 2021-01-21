@@ -199,7 +199,6 @@ extern const char *ReverseOn;
 extern const char *ReverseOff;
 extern char ConfigFile[BUFSIZ];
 
-char *MatchFileName(char *String);
 int SetupVars(void);
 void SetupTerm(void);
 void AddAppendix(char *Name, const char *App);
