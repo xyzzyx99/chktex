@@ -206,4 +206,6 @@ void tackon(char *, const char *);
 int LocateFile(const char *Filename, char *Dest, const char *App,
                struct WordList *wl);
 
+void AddDirectoryFromRelativeFile(const char * Filename, struct WordList *TeXInputs);
+
 #endif /* OPSYS_H */

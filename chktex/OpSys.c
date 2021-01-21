@@ -446,6 +446,45 @@ static int HasFile(char *Dir, const char *Filename, const char *App)
 }
 
 
+/*
+ * If Filename is contains a directory component, then add a fully qualified
+ * directory to the TeXInputs WordList.
+ *
+ * I'm not sure how it will work with some Windows paths,
+ * e.g. C:path\to\file.tex since it doesn't really understand the leading C:
+ * But I'm not sure it would even work with a path like that, and I have no
+ * way to test it.
+ *
+ * Behaviour somewhat controlled by the macros SLASH and DIRCHARS in the
+ * OpSys.h file.
+ *
+ */
+
+void AddDirectoryFromRelativeFile(const char * Filename, struct WordList *TeXInputs)
+{
+    if ( ! Filename )
+        return;
+
+    /* There are no path delimiters, so it's just a file, return null */
+    if ( ! strstr( Filename, DIRCHARS ) )
+        return;
+
+
+    char buf[BUFSIZ];
+    if ( strchr(DIRCHARS,Filename[0]) ) {
+        strcpy(buf,Filename);
+    } else {
+        getcwd(buf, BUFSIZ);
+        tackon(buf,Filename);
+    }
+
+    /* Keep up to the final SLASH -- that will be the directory. */
+    char * end = strrchr(buf,SLASH);
+    *end = '\0';
+    InsertWord(buf,TeXInputs);
+}
+
+
 #if USE_RECURSE
 static int SearchFile(char *Dir, const char *Filename, const char *App)
 {

@@ -484,6 +484,7 @@ int main(int argc, char **argv)
                             if (CurArg < argc)
                                 filename = argv[CurArg++];
 
+                            AddDirectoryFromRelativeFile(filename,&TeXInputs);
                             if (!PushFileName(filename, &InputStack))
                                 break;
                         }
