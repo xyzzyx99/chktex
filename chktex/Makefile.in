@@ -154,6 +154,7 @@ check: chktex $(srcdir)/$(TestOutFile)
 		echo "results were *supposed* to be..."; \
 		diff -u $(srcdir)/$(TestOutFile) chktest; \
 	fi
+	$(srcdir)/tests/run-tests.sh `pwd` "$(srcdir)"
 
 
 chktex: $(OBJS)
