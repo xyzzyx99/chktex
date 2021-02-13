@@ -73,7 +73,7 @@ EXTRA_DIST=configure.in Makefile.in stamp-h.in config.h.in rmeheader.in \
 	$(wildcard m4/*.m4)
 
 # created by configure
-CONFIG_DIST=ChkTeX.tex
+CONFIG_DIST=ChkTeX.tex ChkTeXRC.tex chktexrc
 
 # created at make time
 BUILT_DIST=chktex.doc chkweb.doc deweb.doc README ChkTeX.dvi
@@ -262,7 +262,14 @@ config.status: configure
 %.doc: %.1
 	$(GROFF) $< > $@
 
-ChkTeX.dvi: ChkTeX.tex
+ChkTeXRC.tex: chktexrc.in
+	 $(PERL5) $(srcdir)/MakeChkTeXRC.pl --latex $(srcdir)/chktexrc.in > ChkTeXRC.tex
+
+chktexrc: chktexrc.in
+	 $(PERL5) $(srcdir)/MakeChkTeXRC.pl --chktexrc $(srcdir)/chktexrc.in > chktexrc
+
+
+ChkTeX.dvi: ChkTeX.tex ChkTeXRC.tex
 ifdef LATEX
 	$(LATEX) ChkTeX.tex
 else
@@ -274,7 +281,7 @@ ChkTeX.ps: ChkTeX.dvi
 	$(DVIPS) -o ChkTeX.ps ChkTeX.dvi
 
 ifdef PDFLATEX
-ChkTeX.pdf: ChkTeX.tex
+ChkTeX.pdf: ChkTeX.tex ChkTeXRC.tex
 	$(PDFLATEX) ChkTeX.tex
 else
 ChkTeX.pdf: ChkTeX.ps
