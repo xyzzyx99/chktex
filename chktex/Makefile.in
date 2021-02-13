@@ -47,6 +47,7 @@ LIBS=@LIBS@
 LDFLAGS=@LDFLAGS@
 LN_S=@LN_S@
 LATEX=@LATEX@
+PDFLATEX=@PDFLATEX@
 DVIPS=@DVIPS@
 PS2PDF=ps2pdf
 PERL5=@PERL5@
@@ -272,8 +273,13 @@ endif
 ChkTeX.ps: ChkTeX.dvi
 	$(DVIPS) -o ChkTeX.ps ChkTeX.dvi
 
+ifdef PDFLATEX
+ChkTeX.pdf: ChkTeX.tex
+	$(PDFLATEX) ChkTeX.tex
+else
 ChkTeX.pdf: ChkTeX.ps
 	$(PS2PDF) $< $@
+endif
 
 cover:
 	-./chktex -h

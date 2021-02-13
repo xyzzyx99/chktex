@@ -111,6 +111,7 @@ fi
 
 AC_CHECK_PROGS(GROFF, 'groff -man -P-bu -Tlatin1' 'nroff -man', 'nroff -man')
 
+AC_PATH_PROG(PDFLATEX, pdflatex, no)
 AC_PATH_PROG(LATEX, latex, no)
 dnl if test "$LATEX" = no; then
 dnl	AC_MSG_ERROR([No LaTeX on the system, cannot find latex program.])
