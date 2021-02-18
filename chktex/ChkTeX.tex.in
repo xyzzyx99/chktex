@@ -81,6 +81,15 @@
 %!\newcommand{\slash}{/}
 %endlatex
 
+% PDF table of contents
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  allcolors=blue,
+  pdfpagemode=UseOutlines
+}
+\usepackage{hypcap}
+
 
 \title{\chktex\ v@PACKAGE_VERSION@}
 \author{Jens~T. Berger~Thielemann}
