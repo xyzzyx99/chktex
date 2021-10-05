@@ -403,7 +403,7 @@ A few words on installation on various platforms:
 \paragraph{Note:} You \emph{must} install the new \rsrc\ file; \chktex\ will
 fail to function otherwise!
 
-    After   doing   this,   you   may  enhance  \chktex'  behaviour  by
+    After   doing   this,   you   may  enhance  \chktex's  behaviour  by
 reading/editing the \rsrc\ file.
 
 %latex
