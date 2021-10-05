@@ -54,10 +54,34 @@
   {\noindent\large%
     \begin{tabularx}{\linewidth}{lY}%
       \bf Warning \theerrornum:  & \texttt{#1}%
-    \end{tabularx}}\stepcounter{errornum}\nopagebreak[4]}
+  \end{tabularx}}\stepcounter{errornum}\nopagebreak[4]}
+
+\newcommand{\fmtrc}[1]{%
+  {\noindent\large%
+    %% \begin{tabularx}{\linewidth}{lY}%
+    \phantomsection%
+    \bf\texttt{#1}%
+    \label{rc:#1}
+    %% \end{tabularx}
+  }\nopagebreak[4]}
 
 \newenvironment{errdesc}[1]{\noindent\fmted{#1}\begin{quote}}{\end{quote}%
 \pagebreak[3]}
+
+\newcommand\Keyword[1]{\marginpar{\texttt{\hfill\\ #1}}}
+\newcommand{\chktexrcdefault}{\noindent The default value is}
+\newenvironment{chktexrcvar}[2]{%
+  \smallskip\pagebreak[2]%
+  %% \Keyword{#1}
+  \fmtrc{#1} #2 Variable%
+  \begin{quote}}{%
+  \end{quote}\pagebreak[3]}
+\newenvironment{chktexrcsimplevar}[1]{\begin{chktexrcvar}{#1}{Simple}}{\end{chktexrcvar}}
+\newenvironment{chktexrclistvar}[1]{\begin{chktexrcvar}{#1}{List}}{\end{chktexrcvar}}
+\newenvironment{chktexrclistvar*}[1]{\begin{chktexrcvar}{#1}{Lowercase-able List}}{\end{chktexrcvar}}
+
+%% \newenvironment{chktexrclistvar}[1]{\fmtrc{#1}List Variable}{}
+%% \newenvironment{chktexrclistvar*}[1]{\fmtrc{#1}List Variable with Lowercase}{}
 
 \newenvironment{html}{\comment}{\endcomment}
 \newenvironment{rawhtml}{\comment}{\endcomment}
@@ -400,7 +424,7 @@ A UNIX-compliant template format follows:
 \end{tabularx}
 
 
-\subsubsection{Options}
+\subsubsection{Comamndline Options}
 
 These are the options \chktex\ currently accepts.
 Please note that single-lettered options requiring a numerical or no
@@ -519,6 +543,7 @@ File:Line:Column:Warning number:Warning message
       longer time to parse, but much more informative in use.
     \end{description}
 
+  \phantomsection\label{clarg:format}%
   \item[\texttt{-f [-{}-format]}] Specifies the format of the output.
     This is done using a format similar to \Cmd{printf()}, where we
     support the specifiers listed below.
@@ -748,6 +773,10 @@ The syntax is nearly the same, namely
   \verb+% chktex-file ##+
 \end{center}
 
+
+\input{ChkTeXRC.tex}
+
+
 \subsubsection{Hints}
 I've tried to collect some advice that may be useful --- if you have a
 favourite hint, feel free to send it to me!
@@ -872,10 +901,9 @@ Error messages set in {\it italic type\/} are turned off by default.
 Where margin paragraphs are listed in the text, they refer to the
 keyword in the \rsrc\ file which controls the discussed warning.
 
-\newcommand\Keyword[1]{\marginpar{\texttt{\hfill\\ #1}}}
-
 \smallskip\pagebreak[2]
-\Keyword{Silent}
+\phantomsection
+\Keyword{Silent}\label{warn:silent}
 \begin{errdesc}{Command terminated with space.}
   You tried to terminate a command with a blank space.  Usually, this
   is an error as these are ignored by \LaTeX. In most cases, you would
