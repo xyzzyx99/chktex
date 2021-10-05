@@ -262,10 +262,10 @@ config.status: configure
 %.doc: %.1
 	$(GROFF) $< > $@
 
-ChkTeXRC.tex: chktexrc.in
+ChkTeXRC.tex: chktexrc.in MakeChkTeXRC.pl
 	 $(PERL5) $(srcdir)/MakeChkTeXRC.pl --latex $(srcdir)/chktexrc.in > ChkTeXRC.tex
 
-chktexrc: chktexrc.in
+chktexrc: chktexrc.in  MakeChkTeXRC.pl
 	 $(PERL5) $(srcdir)/MakeChkTeXRC.pl --chktexrc $(srcdir)/chktexrc.in > chktexrc
 
 
@@ -282,7 +282,7 @@ ChkTeX.ps: ChkTeX.dvi
 
 ifdef PDFLATEX
 ChkTeX.pdf: ChkTeX.tex ChkTeXRC.tex
-	$(PDFLATEX) ChkTeX.tex
+	$(PDFLATEX) -interaction=nonstopmode ChkTeX.tex
 else
 ChkTeX.pdf: ChkTeX.ps
 	$(PS2PDF) $< $@
