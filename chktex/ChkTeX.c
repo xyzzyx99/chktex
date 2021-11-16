@@ -156,7 +156,7 @@ static const char *HelpText =
     "    -e  --erroron   : Makes msg # given an error and turns it on.\n"
     "    -m  --msgon     : Makes msg # given a message and turns it on.\n"
     "    -n  --nowarn    : Mutes msg # given.\n"
-    "    -L  --nolinesupp: Disables per-line suppressions.\n"
+    "    -L  --nolinesupp: Disables per-line and per-file suppressions.\n"
     "\n"
     "Output control flags:\n"
     "~~~~~~~~~~~~~~~~~~~~~\n"
