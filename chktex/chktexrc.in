@@ -340,7 +340,7 @@ OutFormat
 Silent
 {
     \rm \em \bf \it \sl \sf \sc \tt \selectfont
-    \rmfamily \sffamily \ttfamily \mdseries \bfseries
+    \rmfamily \sffamily \ttfamily \mdseries \bfseries \itshape
     \slshape \scshape \relax
     \vskip \pagebreak \nopagebreak
 
