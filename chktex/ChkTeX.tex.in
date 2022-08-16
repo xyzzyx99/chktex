@@ -1166,7 +1166,7 @@ keyword in the \rsrc\ file which controls the discussed warning.
 \end{errdesc}
 
 \Keyword{MathEnvir}
-\begin{errdesc}{Mathmode still on at end of LaTeX  file.}
+\begin{errdesc}{Mathmode still on at end of LaTeX file.}
   This error is triggered if you at some point have turned on
   mathmode, and \chktex\ couldn't see that you remembered to turn it
   off.
@@ -1483,7 +1483,7 @@ keyword in the \rsrc\ file which controls the discussed warning.
 \begin{errdesc}{You should put punctuation outside inner/inside
     display math mode.}
   As recommended in the \TeX{}book, you should try to put punctuation
-  outside inner math mode, as this is gets formatted better.
+  outside inner math mode, as it is formatted better.
 
   Similarily, you should let any final punctuation in display math
   mode end up within it. Look at the following example, which was
