@@ -403,6 +403,12 @@ static void PerformEnv(char *Env, int Begin)
         MathMode = max(MathMode, 0);
     }
 
+    if (HasWord(Env, &TextEnvir))
+    {
+        MathMode += Begin ? -1 : 1;
+        MathMode = max(MathMode, 0);
+    }
+
     if (Begin && HasWord(Env, &VerbEnvir))
     {
         VerbMode = TRUE;

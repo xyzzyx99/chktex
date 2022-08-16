@@ -553,6 +553,22 @@ MathEnvir
 {
     displaymath math eqnarray array equation
     align alignat gather flalign multline
+    dmath dgroup darray
+}
+### \end{verbatim}
+### \end{chktexrclistvar}
+
+
+## TextEnvir
+### \begin{chktexrclistvar}{TextEnvir}
+#
+# Environments which typeset their contents as text, for use inside
+# mathematics.  This turns on/off some warnings.
+#
+### \chktexrcdefault\begin{verbatim}
+TextEnvir
+{
+    dsuspend
 }
 ### \end{verbatim}
 ### \end{chktexrclistvar}
@@ -585,7 +601,7 @@ MathCmd
 ### \chktexrcdefault\begin{verbatim}
 TextCmd
 {
-    \text \intertext \shortintertext \mbox
+    \text \intertext \shortintertext \mbox \condition
 }
 ### \end{verbatim}
 ### \end{chktexrclistvar}
