@@ -569,6 +569,18 @@ Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
 Also, $x(3)\text{ is not x(3) but it is $x(3)$}$  
                                         ^^^^^^
 Message 22 in Test.tex: Comment displayed.
+% breqn mode check  
+^
+Message 35 in Test.tex: You should perhaps use `\sin' instead.
+sin x  
+^^^
+Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
+is not the same as sin x, but is the same as $sin x$  
+                                             ^^^^^^^
+Message 35 in Test.tex: You should perhaps use `\sin' instead.
+is not the same as sin x, but is the same as $sin x$  
+                                              ^^^
+Message 22 in Test.tex: Comment displayed.
 This is\\% a comment. Nothing here should be checked(right)?  
          ^
 Message 36 in Test.tex: You should put a space in front of parenthesis.
