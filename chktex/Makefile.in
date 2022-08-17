@@ -86,7 +86,7 @@ SOURCEFILES=$(CSOURCES) $(wildcard $(CSOURCES:.c=.h)) types.h
 
 DISTFILES=$(EXTRA_DIST) $(SOURCEFILES)
 
-all: chktex
+all: chktex chktexrc
 
 DISTDIR:=chktex-@PACKAGE_VERSION@
 dist: $(DISTDIR).tar.gz
@@ -141,7 +141,7 @@ $(srcdir)/$(TestOutFile): $(srcdir)/Test.tex
 	@echo ""
 	$(MAKETEST) 1> $(srcdir)/$(TestOutFile)
 
-check: chktex $(srcdir)/$(TestOutFile)
+check: chktex $(srcdir)/$(TestOutFile) chktexrc
 	@echo ">>> Testing that checking algorithms work correctly..."
 	@-rm -f chktest
 	$(MAKETEST) 1> chktest
