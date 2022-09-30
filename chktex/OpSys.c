@@ -150,6 +150,7 @@ enum LookIn
     liMin,
     liSysDir,
     liUsrDir,
+    liXdgDir,
     liEnvir,
     liCurDir,
     liNFound,
@@ -177,12 +178,10 @@ int SetupVars(void)
             break;
         case liEnvir:          /* Environment defined */
 #ifdef __MSDOS__
-
             if ((Env = getenv("CHKTEXRC")) || (Env = getenv("CHKTEX_HOME")))
 #elif defined(TEX_LIVE)
             if ((Env = kpse_var_value("CHKTEXRC")))
 #else
-
             if ((Env = getenv("CHKTEXRC")))
 #endif
 
@@ -206,6 +205,27 @@ int SetupVars(void)
 
                 *ConfigFile = 0;
             break;
+
+        case liXdgDir: /* Cross-desktop group dir for resource files */
+
+            /* XDG is really unix specific, but it shouldn't hurt to
+             * support it on Windows, should someone set the variables.  */
+            if ((Env = getenv("XDG_CONFIG_HOME")) && *Env)
+            {
+                strcpy(ConfigFile, Env);
+                tackon(ConfigFile, RCBASENAME);
+            }
+            else if ((Env = getenv("HOME")) && *Env)
+            {
+                strcpy(ConfigFile, Env);
+                tackon(ConfigFile, ".config");
+                tackon(ConfigFile, RCBASENAME);
+            }
+            else
+                *ConfigFile = 0;
+
+            break;
+
         case liUsrDir:         /* User dir for resource files */
 #if defined(__unix__)
 
