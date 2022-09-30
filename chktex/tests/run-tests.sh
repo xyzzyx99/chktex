@@ -36,21 +36,21 @@ check_results() {
 echo ">>> Testing that inclusion works correctly..."
 # absolute path
 rm -f "$output"
-${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 \
+${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 -q \
            $testsdir/main.tex 2>/dev/null \
           1> $testsdir/main.out
 check_results
 
 # relative path
 cd "$srcdir"
-${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 \
+${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 -q \
            tests/main.tex 2>/dev/null \
 	 	  1> tests/main.out
 check_results
 
 # file in the same directory
 cd "$testsdir"
-${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 \
+${builddir}/chktex -mall -r -g0 -l$srcdir/chktexrc -v5 -q \
            main.tex 2>/dev/null \
 	 	  1> main.out
 check_results
