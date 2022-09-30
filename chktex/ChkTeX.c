@@ -147,7 +147,7 @@ static const char *HelpText =
     "    -h  --help      : This text.\n"
     "    -i  --license   : Show distribution information\n"
     "    -l  --localrc   : Read local .chktexrc formatted file.\n"
-    "    -d  --debug     : Debug information. Give it a number.\n"
+    "    -d  --debug     : Debug information. A bit field with 5 bits.\n"
     "    -r  --reset     : Reset settings to default.\n"
     "\n"
     "Muting warning messages:\n"
