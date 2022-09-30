@@ -115,7 +115,7 @@ static char term_buffer[2048];
 #  define LOCALRCFILE             "." RCBASENAME
 #endif
 
-char ConfigFile[BUFSIZ] = LOCALRCFILE;
+char ConfigFile[BUFFER_SIZE] = LOCALRCFILE;
 const char *ReverseOn;
 const char *ReverseOff;
 
@@ -490,11 +490,11 @@ void AddDirectoryFromRelativeFile(const char * Filename, struct WordList *TeXInp
         return;
 
 
-    char buf[BUFSIZ];
+    char buf[BUFFER_SIZE];
     if ( strchr(DIRCHARS,Filename[0]) ) {
         strcpy(buf,Filename);
     } else {
-        getcwd(buf, BUFSIZ);
+        getcwd(buf, BUFFER_SIZE);
         tackon(buf,Filename);
     }
 

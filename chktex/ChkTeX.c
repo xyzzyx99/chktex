@@ -74,8 +74,8 @@ unsigned long Brackets[NUMBRACKETS];
  */
 
 
-NEWBUF(TmpBuffer, BUFSIZ);
-NEWBUF(ReadBuffer, BUFSIZ);
+NEWBUF(TmpBuffer, BUFFER_SIZE);
+NEWBUF(ReadBuffer, BUFFER_SIZE);
 
 static const char *Banner =
     "ChkTeX v" PACKAGE_VERSION " - Copyright 1995-96 Jens T. Berger Thielemann.\n"
@@ -334,7 +334,7 @@ static void ExpandTabs(char *From, char *To, long TSize, long MaxDiff)
             Diff = MaxDiff+1;
             if ( !HasExpandedTooLong )
             {
-                PrintPrgErr(pmTabExpands, BUFSIZ);
+                PrintPrgErr(pmTabExpands, BUFFER_SIZE);
             }
             HasExpandedTooLong = 1;
         }
@@ -495,7 +495,7 @@ int main(int argc, char **argv)
                         while (!ferror(OutputFile)
                                && StkTop(&InputStack)
                                && !ferror(CurStkFile(&InputStack))
-                               && FGetsStk(ReadBuffer, BUFSIZ - 1,
+                               && FGetsStk(ReadBuffer, BUFFER_SIZE - 1,
                                            &InputStack))
                         {
 
@@ -503,7 +503,8 @@ int main(int argc, char **argv)
 
                             strrep(ReadBuffer, '\n', ' ');
                             strrep(ReadBuffer, '\r', ' ');
-                            ExpandTabs(ReadBuffer, TmpBuffer, Tab, BUFSIZ - 1 - strlen(ReadBuffer) );
+                            ExpandTabs(ReadBuffer, TmpBuffer, Tab,
+                                       BUFFER_SIZE - 1 - strlen(ReadBuffer));
                             strcpy(ReadBuffer, TmpBuffer);
 
                             strcat(ReadBuffer, " ");

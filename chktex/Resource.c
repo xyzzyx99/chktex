@@ -271,7 +271,7 @@ int ReadRC(const char *Filename)
 static enum Token ReadWord(char *Buffer, FILE * fh)
 {
     static char *String = NULL;
-    static char StatBuf[BUFSIZ];
+    static char StatBuf[BUFFER_SIZE];
     enum Token Retval = FLG_Eof;
 
     unsigned short Chr;
@@ -285,7 +285,7 @@ static enum Token ReadWord(char *Buffer, FILE * fh)
         {
             if (!(String && *String))
             {
-                if (fgets(StatBuf, BUFSIZ - 1, fh))
+                if (fgets(StatBuf, BUFFER_SIZE - 1, fh))
                     String = strip(StatBuf, STRP_RGT);
                 RsrcLine++;
             }

@@ -166,9 +166,9 @@ static char *BufPtr;
 static int ItFlag = efNone;
 static int MathFlag = efNone;
 
-NEWBUF(Buf, BUFSIZ);
-NEWBUF(CmdBuffer, BUFSIZ);
-NEWBUF(ArgBuffer, BUFSIZ);
+NEWBUF(Buf, BUFFER_SIZE);
+NEWBUF(CmdBuffer, BUFFER_SIZE);
+NEWBUF(ArgBuffer, BUFFER_SIZE);
 
 static enum ErrNum PerformCommand(const char *Cmd, char *Arg);
 
@@ -404,7 +404,7 @@ static char *PreProcess(void)
 
 static void PerformEnv(char *Env, int Begin)
 {
-    static char VBStr[BUFSIZ] = "";
+    static char VBStr[BUFFER_SIZE] = "";
 
     if (HasWord(Env, &MathEnvir))
     {
@@ -1873,7 +1873,7 @@ PrintError(const enum ErrNum Error, const char *File, const char *String,
            const long Position, const long Len, const long LineNo,  ...)
 {
     static                      /* Just to reduce stack usage... */
-    char PrintBuffer[BUFSIZ];
+    char PrintBuffer[BUFFER_SIZE];
     va_list MsgArgs;
 
     char *LastNorm = OutputFormat;

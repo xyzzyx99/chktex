@@ -115,7 +115,7 @@ void *sfmemset(void *to, int c, long n)
 {
     if (to && (n > 0))
     {
-        n = min(n, BUFSIZ);
+        n = min(n, BUFFER_SIZE);
 
         return (memset(to, c, (size_t) n));
     }
@@ -325,7 +325,7 @@ void strwrite(char *To, const char *From, unsigned long Len)
     unsigned long i, j;
     unsigned long FromLen = strlen(From);
 
-    Len = min(Len, BUFSIZ);
+    Len = min(Len, BUFFER_SIZE);
 
     if (To && From)
     {
@@ -681,7 +681,7 @@ void *StkTop(struct Stack *Stack)
 int PushFileName(const char *Name, struct Stack *stack)
 {
     FILE *fh = NULL;
-    static char NameBuf[BUFSIZ];
+    static char NameBuf[BUFFER_SIZE];
 
     if (Name && stack)
     {
