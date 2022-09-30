@@ -124,6 +124,15 @@ static const char LTX_GenPunc[] = { ',', ';', 0 };
 static const char LTX_SmallPunc[] = { '.', ',', 0 };
 
 /*
+ * A list of characters that could be considered to start a new
+ * sentence, or not.
+ *
+ * This allows "Mr. ``X'' " to warn about the same as "Mr. X".
+ *
+ */
+static const char LTX_BosPunc[] = {'`', '(', '[', 0};
+
+/*
  * String used to delimit a line suppression.  This string must be
  * followed immediately by the number of the warning to be suppressed.
  * If more than one warning is to be suppressed, then multiple copies
@@ -1480,7 +1489,7 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                     HEREA(3, emEllipsis, cTmpPtr);
                 }
 
-                /* Regexp: "([^A-Z@.])\.[.!?:]*\s+[a-z]" */
+                /* Regexp: "([^A-Z@.])\.[.!?:]*\s[ \`([]*[a-z]" */
 
                 TmpPtr = BufPtr;
                 SKIP_AHEAD(TmpPtr, TmpC, strchr(LTX_EosPunc, TmpC));
@@ -1489,7 +1498,9 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                     if (!isupper((unsigned char)*PrePtr) && (*PrePtr != '@') &&
                         (*PrePtr != '.'))
                     {
-                        SKIP_AHEAD(TmpPtr, TmpC, LATEX_SPACE(TmpC));
+                        SKIP_AHEAD(TmpPtr, TmpC,
+                                   (LATEX_SPACE(TmpC) || TmpC == '\\' ||
+                                    strchr(LTX_BosPunc, TmpC)));
                         if (islower((unsigned char)*TmpPtr))
                             PSERR(BufPtr - Buf, 1, emInterWord);
                         else
