@@ -278,6 +278,15 @@ Message 12 in Test.tex: Interword spacing (`\ ') should perhaps be used.
 1st. Foo Inc. Ab.cd. foo ab.cd. Foo. bar baz., billy.; bob.: joe.! frank.? james.. george  
                                                                                  ^
 Message 22 in Test.tex: Comment displayed.
+% Bug 54751  
+^
+Message 12 in Test.tex: Interword spacing (`\ ') should perhaps be used.
+Mr. ``X'' and Mrs. \(Y\)  
+   ^
+Message 12 in Test.tex: Interword spacing (`\ ') should perhaps be used.
+Mr. ``X'' and Mrs. \(Y\)  
+                  ^
+Message 22 in Test.tex: Comment displayed.
 % Warning 13  
 ^
 Message 13 in Test.tex: Intersentence spacing (`\@') should perhaps be used.
