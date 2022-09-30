@@ -59,38 +59,38 @@ echo ">>> Testing that correct chktexrc files are loaded"
 # XDG variables
 unset HOME
 echo '%' \
-    | XDG_CONFIG_HOME=${builddir}/tests/sub \
+    | XDG_CONFIG_HOME=${testsdir}/sub \
         ${builddir}/chktex -mall -v0 -q \
     | grep 'loaded chktex/tests/sub stdin' \
     || (echo XDG_CONFIG_HOME/chktexrc inclusion failed; exit 1)
 echo '%' \
-    | HOME=${builddir}/tests/sub1  \
+    | HOME=${testsdir}/sub1  \
         ${builddir}/chktex -mall -v0 -q \
     | grep 'loaded chktex/tests/sub1/.config/chktexrc stdin' \
     || (echo HOME/.config/chktexrc inclusion failed; exit 1)
 
 # HOME, LOGDIR
 echo '%' \
-    | HOME=${builddir}/tests/sub2  \
+    | HOME=${testsdir}/sub2  \
         ${builddir}/chktex -mall -v0 -q \
     | grep 'loaded chktex/tests/sub2/.chktexrc stdin' \
     || (echo HOME/.chktexrc inclusion failed; exit 1)
 echo '%' \
-    | LOGDIR=${builddir}/tests/sub2  \
+    | LOGDIR=${testsdir}/sub2  \
         ${builddir}/chktex -mall -v0 -q \
     | grep 'loaded chktex/tests/sub2/.chktexrc stdin' \
     || (echo LOGDIR/.chktexrc inclusion failed; exit 1)
 
 # CHKTEXRC
 echo '%' \
-    | CHKTEXRC=${builddir}/tests/sub2  \
+    | CHKTEXRC=${testsdir}/sub2  \
         ${builddir}/chktex -mall -v0 -q \
     | grep 'loaded chktex/tests/sub2/.chktexrc stdin' \
     || (echo CHKTEXRC/.chktexrc inclusion failed; exit 1)
 
 # CWD
 echo '%' \
-    | (cd ${builddir}/tests/sub2;  \
+    | (cd ${testsdir}/sub2;  \
         ${builddir}/chktex -mall -v0 -q)  \
     | grep 'loaded chktex/tests/sub2/.chktexrc stdin' \
     || (echo PWD/.chktexrc inclusion failed; exit 1)
