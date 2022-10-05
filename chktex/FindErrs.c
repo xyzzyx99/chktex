@@ -1840,7 +1840,14 @@ void PrintStatus(unsigned long Lines)
 
         /* Print how to suppress warnings. */
         if ( ErrPrint + WarnPrint > 0 ) {
-            fprintf(stderr, "See the manual for how to suppress some or all of these warnings/errors.\n" );
+            fprintf(
+                stderr,
+                "See the manual for how to suppress some or all of these warnings/errors.\n"
+                "The manual is available "
+#ifdef TEX_LIVE
+                "by running `texdoc chktex` or "
+#endif
+                "at https://www.nongnu.org/chktex/ChkTeX.pdf\n");
         }
     }
 }
