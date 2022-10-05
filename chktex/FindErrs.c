@@ -54,6 +54,7 @@ int NumRegexes = 0;
 int FoundErr = EXIT_SUCCESS;
 int LastWasComment = FALSE;
 int SeenSpace = FALSE;
+int FrenchSpacing = FALSE;
 
 /***************************** ERROR MESSAGES ***************************/
 
@@ -1515,8 +1516,10 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
             case ';':
                 /* Regexp: "[A-Z][A-Z][.!?:;]\s+" */
 
-                if (isspace((unsigned char)*BufPtr) && isupper((unsigned char)*PrePtr) &&
-                    (isupper((unsigned char)PrePtr[-1]) || (Char != '.')))
+                if (isspace((unsigned char)*BufPtr) &&
+                    isupper((unsigned char)*PrePtr) &&
+                    (isupper((unsigned char)PrePtr[-1]) || (Char != '.')) &&
+                    !FrenchSpacing)
                     HERE(1, emInterSent);
 
                 /* FALLTHRU */
@@ -2039,6 +2042,10 @@ static enum ErrNum PerformCommand(const char *Cmd, char *Arg)
         AtLetter = TRUE;
     else if (!strcmp(Cmd, "\\makeatother"))
         AtLetter = FALSE;
+    else if (!strcmp(Cmd, "\\frenchspacing"))
+        FrenchSpacing = TRUE;
+    else if (!strcmp(Cmd, "\\nonfrenchspacing"))
+        FrenchSpacing = FALSE;
     else if (InputFiles && !(strcmp(Cmd, "\\input") && strcmp(Cmd, "\\include")))
     {
         SKIP_AHEAD(Arg, TmpC, LATEX_SPACE(TmpC));
