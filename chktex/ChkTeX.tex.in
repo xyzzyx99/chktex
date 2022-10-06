@@ -1109,7 +1109,8 @@ keyword in the \rsrc\ file which controls the discussed warning.
 
   One of the specified abbreviations were found. Unless you have
   previously said \verb@\frenchspacing@, you'll have incorrect
-  spacing, which one should avoid if possible.
+  spacing, which one should avoid if possible. The error will be suppressed
+  if you have used  \verb@\frenchspacing@.
 
   You can also specify case-insensitive abbreviations in \texttt{[]}, though
   only the first letter is actually case-insensitive.
@@ -1125,11 +1126,13 @@ keyword in the \rsrc\ file which controls the discussed warning.
 
 \begin{errdesc}{Intersentence spacing (`\BS{}@') should perhaps be used.}
 
-  \LaTeX' detection of whether a period ends a sentence or not, is
+  \LaTeX's detection of whether a period ends a sentence or not, is
   only based upon the character in front of the period. If it's
   uppercase, it assumes that it does not end a sentence. While this
   may be correct in many cases, it may be incorrect in others.
   \chktex\ thus outputs this warning in every such case.
+
+  The error will be suppressed if you have used \verb@\frenchspacing@.
 
   \begin{errexam}
     \verb@I've seen an UFO!@\underline{\tt\ }\verb@Right over there!@ \\*
