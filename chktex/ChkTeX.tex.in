@@ -1115,11 +1115,11 @@ keyword in the \rsrc\ file which controls the discussed warning.
   only the first letter is actually case-insensitive.
 
   \begin{errexam}
-    \verb@This is an example, i.e.@\underline{\tt\ }\verb@an demonstration.@ \\*
-    This is an example, i.e. an demonstration.        \\*
+    \verb@This is an example, i.e.@\underline{\tt\ }\verb@a demonstration.@ \\*
+    This is an example, i.e. a demonstration.        \\*
     \smallskip
-    \verb@This is an example, i.e.\ an demonstration.@   \\*
-    This is an example, i.e.\ an demonstration.        \\*
+    \verb@This is an example, i.e.\ a demonstration.@   \\*
+    This is an example, i.e.\ a demonstration.        \\*
   \end{errexam}
 \end{errdesc}
 
