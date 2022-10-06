@@ -1104,7 +1104,10 @@ keyword in the \rsrc\ file which controls the discussed warning.
   \end{errexam}
 \end{errdesc}
 
+\phantomsection
+\label{warn:interword}
 \Keyword{Abbrev}
+\Keyword{CmdSpaceStyle}
 \begin{errdesc}{Interword spacing (`\BS\ ') should perhaps be used.}
 
   One of the specified abbreviations were found. Unless you have
@@ -1124,6 +1127,9 @@ keyword in the \rsrc\ file which controls the discussed warning.
   \end{errexam}
 \end{errdesc}
 
+\phantomsection
+\label{warn:intersentence}
+\Keyword{CmdSpaceStyle}
 \begin{errdesc}{Intersentence spacing (`\BS{}@') should perhaps be used.}
 
   \LaTeX's detection of whether a period ends a sentence or not, is

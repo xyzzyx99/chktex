@@ -167,6 +167,58 @@ TabSize = 8
 ### \end{chktexrcsimplevar}
 
 
+## CmdSpaceStyle
+### \medskip
+### \begin{chktexrcsimplevar}{CmdSpaceStyle}
+#
+# How to treat a command is followed by punction.  In all cases the
+# warnings are also governed by the main warning settings, namely
+# warnings 12 and 13 about interword and intersentence spacings.
+### These can be found on page~\pageref{warn:interword}.
+#
+# If set to Ignore, then it won't print any warnings when pucntuation
+# follows a command.
+#
+#
+# If CmdSpaceStyle is set to InterWord, then it will print warnings
+# when interword spacing should (potentially) be used.  For example,
+# without a command the following will trigger warning 12
+#
+###  \begin{errexam}
+#     @verb@I've seen a UFOs, etc. in my life.@endverb@
+###  \end{errexam}
+#
+# And if set to InterWord, so will
+#
+###  \begin{errexam}
+#     @verb@I've seen a UFOs, \etc. in my life.@endverb@
+###  \end{errexam}
+#
+#
+# If set to InterSentence, then it will print warnings when
+# intersentence spacing should (potentially) be used.  For example,
+# without a command the following will trigger warning 13
+#
+###  \begin{errexam}
+#     @verb@I've seen an UFO! Right over there!@endverb@
+###  \end{errexam}
+#
+# And if set to InterSentence, so will
+#
+###  \begin{errexam}
+#     @verb@I've seen an \UFO! Right over there!@endverb@
+###  \end{errexam}
+#
+#
+# Setting CmdSpaceStyle to Both will cause warnings to be printed in
+# both cases.
+#
+### \chktexrcdefault\begin{verbatim}
+CmdSpaceStyle = Ignore
+### \end{verbatim}
+### \end{chktexrcsimplevar}
+
+
 ## CmdLine
 ### \begin{chktexrclistvar}{CmdLine}
 #
