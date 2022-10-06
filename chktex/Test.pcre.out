@@ -281,6 +281,15 @@ Message 13 in Test.tex: Intersentence spacing (`\@') should perhaps be used.
 Look at THIS! It's an error.  
             ^
 Message 22 in Test.tex: Comment displayed.
+% after frenchspacing it's not an error  
+^
+Message 22 in Test.tex: Comment displayed.
+% warning again  
+^
+Message 13 in Test.tex: Intersentence spacing (`\@') should perhaps be used.
+Look at THIS! It's an error.  
+            ^
+Message 22 in Test.tex: Comment displayed.
 % Warning 14  
 ^
 Message 1 in Test.tex: Command terminated with space.
