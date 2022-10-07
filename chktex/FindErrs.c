@@ -792,8 +792,13 @@ static void CheckAbbrevs(const char *Buffer)
         for (i = Abbrev.MaxLen; i >= 0; i--)
         {
             *--TmpPtr = *AbbPtr--;
-            if (!isalpha((unsigned char)*AbbPtr) && HasWord(TmpPtr, &Abbrev))
+            if (!isalpha((unsigned char)*AbbPtr) &&
+                /* Ignore spacing problems after commands if desired */
+                (*AbbPtr != '\\' || (CmdSpace & csInterWord)) &&
+                HasWord(TmpPtr, &Abbrev))
+            {
                 PSERR(Buffer - Buf + 1, 1, emInterWord);
+            }
             if (!*AbbPtr)
                 break;
         }
@@ -1503,7 +1508,13 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                                    (LATEX_SPACE(TmpC) || TmpC == '\\' ||
                                     strchr(LTX_BosPunc, TmpC)));
                         if (islower((unsigned char)*TmpPtr))
-                            PSERR(BufPtr - Buf, 1, emInterWord);
+                        {
+                            /* Ignore spacing problems after commands if desired */
+                            TmpPtr = PrePtr;
+                            SKIP_BACK(TmpPtr, TmpC, istex(TmpC));
+                            if (*TmpPtr != '\\' || (CmdSpace & csInterWord))
+                                PSERR(BufPtr - Buf, 1, emInterWord);
+                        }
                         else
                             CheckAbbrevs(&BufPtr[-1]);
                     }
@@ -1520,7 +1531,13 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                     isupper((unsigned char)*PrePtr) &&
                     (isupper((unsigned char)PrePtr[-1]) || (Char != '.')) &&
                     !FrenchSpacing)
-                    HERE(1, emInterSent);
+                {
+                    /* Ignore spacing problems after commands if desired */
+                    TmpPtr = PrePtr;
+                    SKIP_BACK(TmpPtr, TmpC, istex(TmpC));
+                    if (*TmpPtr != '\\' || (CmdSpace & csInterSentence))
+                        HERE(1, emInterSent);
+                }
 
                 /* FALLTHRU */
             case ',':
