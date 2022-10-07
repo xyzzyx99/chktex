@@ -1,0 +1,5 @@
+% -*- TeX -*-
+% This file is merely to ensure that git will create the input/
+% directory.  That ensures that the \input input in Test.tex is able
+% to distinguish between directories and regular files.
+% This was bug #56520.
