@@ -233,7 +233,7 @@ DEBUGBITS(Debug_BIT)
  MSG(pmNoRsrc,      etWarn, TRUE, 0,\
      "Could not find global resource file.")\
  MSG(pmQuoteStyle,    etWarn, TRUE, 0,\
-     "Illegal quotestyle `%s'.")\
+     "Illegal quotestyle `%s' using `Traditional'.")\
  MSG(pmWrongWipeTemp, etWarn, TRUE, 0,\
      "Wrong template for wiping arguments, \"%s\"")\
  MSG(pmSpecifyTerm, etErr, TRUE, 0,\
