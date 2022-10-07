@@ -659,6 +659,9 @@ Message 31 in Test.tex: This text may be ignored.
 \end{verbatim} FOO  
                ^^^
 Message 22 in Test.tex: Comment displayed.
+% WipeArg  
+^
+Message 22 in Test.tex: Comment displayed.
 % Warning 16,15  
 ^
 Message 45 in Test.tex: Use \[ ... \] instead of $$ ... $$.
