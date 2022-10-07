@@ -1109,6 +1109,73 @@ static void CheckDash(void)
                 }
             }
 
+            /* Check DashExcpt looking for phrase with hyphenation that doesn't
+             * match what's in DashExcpt.  This really only makes sense for
+             * HyphDash, but it should be cheap in the other cases. */
+            if (!Errored)
+            {
+                TmpPtr = BufPtr-1;
+
+                SKIP_BACK(TmpPtr, TmpC, (TmpC == '-'));
+                SKIP_BACK(TmpPtr, TmpC, isalpha(TmpC));
+                /* If we found a dash going backwards, the we already checked
+                 * this on the first dash */
+                if (*TmpPtr != '-')
+                {
+                    /* PrePtr now points to the beginning of the hyphenated phrase */
+                    PrePtr = ++TmpPtr;
+
+                    struct WordList *el = &DashExcpt;
+
+                    FORWL(i, *el)
+                    {
+                        char *e = el->Stack.Data[i];
+                        TmpPtr = PrePtr;
+
+                        /* Walk through the strings until we find a
+                         * mismatch.  */
+                        int FoundHyphenDiff = FALSE;
+                        while (*e && *TmpPtr && *e == *TmpPtr)
+                        {
+                            /* Skip past characters that are the same */
+                            while (*e && *TmpPtr && *e == *TmpPtr)
+                            {
+                                ++e;
+                                ++TmpPtr;
+                            }
+                            /* Skip past differences in hyphens */
+                            while (*e == '-' && *TmpPtr != '-')
+                            {
+                                ++e;
+                                FoundHyphenDiff = TRUE;
+                            }
+                            while (*TmpPtr == '-' && *e != '-')
+                            {
+                                ++TmpPtr;
+                                FoundHyphenDiff = TRUE;
+                            }
+                        }
+
+                        /* If there was no mismatch all the way to the end of e,
+                         * and TmpPtr is not in the middle of a word, then they
+                         * matched ignoring hyphens, so we have found the one
+                         * DashExcpt element we care about and don't have to
+                         * check any others.  Moreover, if we found a difference
+                         * in hyphenation, then we must warn because it matches
+                         * something in DashExcpt but with improper hyphenation.
+                         * It's possible they could put the same phrase in twice
+                         * with different hyphenations, but that seems pretty
+                         * pathological. */
+                        if (*e == '\0' && !isalpha((unsigned char)*TmpPtr))
+                        {
+                            if (FoundHyphenDiff)
+                                Errored = TRUE;
+                            break;
+                        }
+                    }
+                }
+            }
+
             if (Errored)
                 HERE(TmpCount, emWrongDash);
         }
