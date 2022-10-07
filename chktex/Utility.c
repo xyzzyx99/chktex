@@ -87,8 +87,7 @@ int fexists(const char *Filename)
 #else
 
     FILE *fh;
-
-    if (fh = fopen(Filename, "r"))
+    if ((fh = fopen(Filename, "r")))
     {
         Retval = TRUE;
         fclose(fh);
