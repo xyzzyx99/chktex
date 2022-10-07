@@ -207,6 +207,8 @@ static const char *HelpText =
 
 enum Quote Quote;
 
+enum CmdSpace CmdSpace;
+
 char VerbNormal[] = "%k %n in %f line %l: %m\n" "%r%s%t\n" "%u\n";
 
 #define DEF(type, name, value)  type name = value
@@ -443,6 +445,22 @@ int main(int argc, char **argv)
                 {
                     PrintPrgErr(pmQuoteStyle, QuoteStyle);
                     Quote = quTrad;
+                }
+            }
+            if (CmdSpaceStyle)
+            {
+                if (!strcasecmp(CmdSpaceStyle, "IGNORE"))
+                    CmdSpace = csIgnore;
+                else if (!strcasecmp(CmdSpaceStyle, "INTERWORD"))
+                    CmdSpace = csInterWord;
+                else if (!strcasecmp(CmdSpaceStyle, "INTERSENTENCE"))
+                    CmdSpace = csInterSentence;
+                else if (!strcasecmp(CmdSpaceStyle, "BOTH"))
+                    CmdSpace = csBoth;
+                else
+                {
+                    PrintPrgErr(pmCmdSpaceStyle, CmdSpaceStyle);
+                    CmdSpace = csIgnore;
                 }
             }
 

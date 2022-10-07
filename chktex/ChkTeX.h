@@ -261,7 +261,9 @@ DEBUGBITS(Debug_BIT)
 MSG(pmLongLines,  etWarn,  TRUE, 0,\
      "ChkTeX does not handle lines over %d bytes correctly.  Some errors and line numbers may be wrong in this file.") \
 MSG(pmTabExpands,  etWarn,  TRUE, 0,\
-     "ChkTeX could not fully expand tabs because the resulting line would be more than %d bytes.  Some errors and line numbers may be wrong in this file.")
+     "ChkTeX could not fully expand tabs because the resulting line would be more than %d bytes.  Some errors and line numbers may be wrong in this file.") \
+MSG(pmCmdSpaceStyle, etWarn, TRUE, 0,\
+     "Illegal CmdSpaceStyle `%s' using `Ignore'.")
 
 #undef MSG
 #define MSG(num, type, inuse, ctxt, text) num,
@@ -353,6 +355,15 @@ enum Quote
 
 extern enum Quote Quote;
 extern int StdInTTY, StdOutTTY, UsingStdIn;
+
+enum CmdSpace
+{
+    csIgnore = 0,
+    csInterWord = 0x1,
+    csInterSentence = 0x2,
+    csBoth = 0x3, /* both bits set */
+};
+extern enum CmdSpace CmdSpace;
 
 int main(int argc, char **argv);
 void PrintPrgErr(enum PrgErrNum, ...);
