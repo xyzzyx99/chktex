@@ -549,3 +549,24 @@ static int SearchFile(char *Dir, const char *Filename, const char *App)
     return (Found);
 }
 #endif /* USE_RECURSE */
+
+#if defined(HAVE_STAT)
+int IsRegFile(const char *Filename)
+{
+    int Retval = FALSE;
+    struct stat *statbuf;
+    if ((statbuf = malloc(sizeof(struct stat))))
+    {
+        if (!stat(Filename, statbuf))
+        {
+            if ((statbuf->st_mode & S_IFMT) == S_IFREG)
+                Retval = TRUE;
+        }
+        free(statbuf);
+    }
+
+    return Retval;
+}
+#else
+int IsRegFile(const char *Filename) { printf("WTF\n");return TRUE; }
+#endif

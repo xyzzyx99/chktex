@@ -96,6 +96,12 @@ int fexists(const char *Filename)
         Retval = FALSE;
 #endif
 
+    /* Ensure that it's not a directory */
+    if (Retval && !IsRegFile(Filename))
+    {
+        Retval = FALSE;
+    }
+
     return (Retval);
 }
 

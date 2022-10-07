@@ -227,5 +227,6 @@ int LocateFile(const char *Filename, char *Dest, const char *App,
                struct WordList *wl);
 
 void AddDirectoryFromRelativeFile(const char * Filename, struct WordList *TeXInputs);
+int IsRegFile(const char *Filename);
 
 #endif /* OPSYS_H */
