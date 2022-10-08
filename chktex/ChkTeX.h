@@ -337,15 +337,14 @@ extern FILE *OutputFile, *InputFile;
   DEF(unsigned long, ErrPrint, 0);    /* # errors printed */            \
   DEF(unsigned long, WarnPrint, 0);   /* # warnings printed */          \
   DEF(unsigned long, UserSupp, 0);    /* # user suppressed warnings */  \
-  DEF(unsigned long, LineSupp, 0);    /* # warnings suppressed on a single line */ \
-  DEF(uint64_t, FileSuppressions, 0);     /* # warnings suppressed in a file */ \
-  DEF(uint64_t, UserFileSuppressions, 0) /* # User warnings suppressed in a file */
+  DEF(unsigned long, LineSupp, 0);    /* # warnings suppressed on a single line */
 
 #define DEF(type, name, value) extern type name
 OPTION_DEFAULTS;
 STATE_VARS;
 #undef DEF
 extern struct Stack CharStack, InputStack, EnvStack, ConTeXtStack;
+extern struct Stack FileSuppStack, UserFileSuppStack;
 
 enum Quote
 {

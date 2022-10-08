@@ -706,6 +706,7 @@ int PushFileName(const char *Name, struct Stack *stack)
 int PushFile(const char *Name, FILE * fh, struct Stack *stack)
 {
     struct FileNode *fn;
+    uint64_t *filesupp;
 
     if (Name && fh && stack)
     {
@@ -715,6 +716,21 @@ int PushFile(const char *Name, FILE * fh, struct Stack *stack)
             {
                 fn->fh = fh;
                 fn->Line = 0L;
+                if ((filesupp = malloc(sizeof(uint64_t))))
+                {
+                    *filesupp = 0;
+                    StkPush(filesupp, &FileSuppStack);
+                }
+                else
+                    PrintPrgErr(pmNoStackMem);
+                if ((filesupp = malloc(sizeof(uint64_t))))
+                {
+                    *filesupp = 0;
+                    StkPush(filesupp, &UserFileSuppStack);
+                }
+                else
+                    PrintPrgErr(pmNoStackMem);
+
                 if (StkPush(fn, stack))
                     return (TRUE);
                 free(fn->Name);
@@ -759,6 +775,9 @@ char *FGetsStk(char *Dest, unsigned long len, struct Stack *stack)
                 free(fn->Name);
             free(fn);
             HasSeenLong = 0;
+
+            StkPop(&FileSuppStack);
+            StkPop(&UserFileSuppStack);
         }
         while (!Retval && (fn = StkTop(stack)));
     }

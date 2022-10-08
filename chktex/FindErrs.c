@@ -310,9 +310,8 @@ static char *PreProcess(void)
     char *TmpPtr;
 
     /* Reset any line suppressions  */
-
-    LineSuppressions = FileSuppressions;
-    UserLineSuppressions = UserFileSuppressions;
+    LineSuppressions = *(uint64_t *)StkTop(&FileSuppStack);
+    UserLineSuppressions = *(uint64_t *)StkTop(&UserFileSuppStack);
 
     /* Kill comments. */
     strcpy(Buf, RealBuf);
@@ -359,15 +358,16 @@ static char *PreProcess(void)
                     {
                         PrintPrgErr(pmSuppTooHigh, error, MaxSuppressionBits);
                     }
+                    uint64_t errbit = ((uint64_t)1 << abs(error));
                     if (error > 0)
                     {
-                        FileSuppressions |= ((uint64_t)1 << error);
-                        LineSuppressions |= ((uint64_t)1 << error);
+                        *(uint64_t *)StkTop(&FileSuppStack) |= errbit;
+                        LineSuppressions |= errbit;
                     }
                     else
                     {
-                        UserFileSuppressions |= ((uint64_t)1 << (-error));
-                        UserLineSuppressions |= ((uint64_t)1 << (-error));
+                        *(uint64_t *)StkTop(&UserFileSuppStack) |= errbit;
+                        UserLineSuppressions |= errbit;
                     }
                 }
                 TmpPtr = EscapePtr;

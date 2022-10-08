@@ -46,18 +46,12 @@ struct ErrMsg PrgMsgs[pmMaxFault + 1] = {
     PRGMSGS {(enum ErrNum)pmMaxFault, etErr, TRUE, 0, INTERNFAULT}
 };
 
-struct Stack CharStack = {
-    0L
-}, InputStack =
-
-{
-0L}, EnvStack =
-
-{
-0L}, ConTeXtStack =
-
-{
-0L};
+struct Stack CharStack = {0L};
+struct Stack InputStack = {0L};
+struct Stack EnvStack = {0L};
+struct Stack ConTeXtStack = {0L};
+struct Stack FileSuppStack = {0L};
+struct Stack UserFileSuppStack = {0L};
 
 /************************************************************************/
 
