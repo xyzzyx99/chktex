@@ -134,7 +134,7 @@ TestOutFile := Test.nore.out
 else
 TestOutFile := Test.$(TestOutFile).out
 endif
-$(srcdir)/$(TestOutFile): $(srcdir)/Test.tex
+$(srcdir)/$(TestOutFile): $(srcdir)/Test.tex $(srcdir)/input/file
 	-rm -f $(srcdir)/$(TestOutFile)
 	@echo ""
 	@echo "***Warning: creating $(TestOutFile)***"

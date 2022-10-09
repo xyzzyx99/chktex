@@ -406,6 +406,12 @@ Message 1 in input.tex: Command terminated with space.
 Message 11 in input.tex: You should use \ldots to achieve an ellipsis.
 \this is a test of whether the file is actually inputted...  
                                                         ^^^
+Message 22 in input/file: Comment displayed.
+% -*- TeX -*-  
+^
+Message 22 in input/file: Comment displayed.
+% chktex-file 22  
+^
 Message 22 in Test.tex: Comment displayed.
 % Warning 29  
 ^
