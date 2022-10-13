@@ -98,3 +98,10 @@ echo '%' \
 # Not sure how to test KPSE variables...
 # TEXMFMAIN CHKTEX_CONFIG
 echo ">>> OK!"
+
+# Command line options
+echo "Checking command line RC settings..."
+(${builddir}/chktex -d 4 -STabSize=7 </dev/null 2>&1 \
+     | grep -A1 TabSize | grep -E '\t7$' >/dev/null) \
+    || (echo Setting TabSize from command line failed; exit 1)
+echo ">>> OK!"
