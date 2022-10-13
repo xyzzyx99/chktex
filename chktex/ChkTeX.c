@@ -52,6 +52,7 @@ struct Stack EnvStack = {0L};
 struct Stack ConTeXtStack = {0L};
 struct Stack FileSuppStack = {0L};
 struct Stack UserFileSuppStack = {0L};
+struct Stack MathModeStack = {0L};
 
 /************************************************************************/
 

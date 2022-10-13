@@ -409,14 +409,18 @@ static void PerformEnv(char *Env, int Begin)
 
     if (HasWord(Env, &MathEnvir))
     {
-        MathMode += Begin ? 1 : -1;
-        MathMode = max(MathMode, 0);
+        if (Begin)
+            PushMode(TRUE, &MathModeStack);
+        else
+            StkPop(&MathModeStack);
     }
 
     if (HasWord(Env, &TextEnvir))
     {
-        MathMode += Begin ? -1 : 1;
-        MathMode = max(MathMode, 0);
+        if (Begin)
+            PushMode(FALSE, &MathModeStack);
+        else
+            StkPop(&MathModeStack);
     }
 
     if (Begin && HasWord(Env, &VerbEnvir))
@@ -469,7 +473,7 @@ static enum DotLevel CheckDots(char *PrePtr, char *PstPtr)
     int TmpC;
     enum DotLevel Front = dtUnknown, Back = dtUnknown;
 
-    if (MathMode)
+    if (CurStkMode(&MathModeStack))
     {
         PrePtr--;
 #define SKIP_EMPTIES(macro, ptr) macro(ptr, TmpC, \
@@ -642,10 +646,9 @@ static void PerformBigCmd(char *CmdPtr)
 
             if ((*TmpPtr == 'i') || (*TmpPtr == 'j'))
                 PrintError(emAccent, CurStkName(&InputStack), RealBuf,
-                           CmdPtr - Buf,
-                           (long) strlen(CmdBuffer), Line,
+                           CmdPtr - Buf, (long)strlen(CmdBuffer), Line,
                            CmdBuffer, *TmpPtr,
-                           MathMode ? "math" : "");
+                           CurStkMode(&MathModeStack) ? "math" : "");
         }
         else
             PSERR(CmdPtr - Buf, CmdLen, emNoArgFound);
@@ -1047,7 +1050,7 @@ static void CheckDash(void)
     SKIP_AHEAD(TmpPtr, TmpC, TmpC == '-');
     TmpCount = TmpPtr - BufPtr + 1;
 
-    if (MathMode)
+    if (CurStkMode(&MathModeStack))
     {
         if (TmpCount > 1)
             HERE(TmpCount, emWrongDash);
@@ -1228,14 +1231,8 @@ static void HandleBracket(char Char)
                     ItState = TRUE;
 
                 /* Same for math mode */
-                if (ei->Flags & efMath)
-                {
-                    MathMode = 1;
-                }
-                else if (ei->Flags & efNoMath)
-                {
-                    MathMode = 0;
-                }
+                if (ei->Flags & efMath || ei->Flags & efNoMath)
+                    StkPop(&MathModeStack);
 
                 FreeErrInfo(ei);
             }
@@ -1275,12 +1272,16 @@ static void HandleBracket(char Char)
 
                     switch (MathFlag)
                     {
-                    default:
+                    case efNone:
+                        break;
+                    case efMath:
+                    case efNoMath:
+                        PushMode((MathFlag == efMath), &MathModeStack);
+                        /* Save for when we exit this delimiter */
                         ei->Flags |= MathFlag;
+                        /* Reset flag just in case... */
                         MathFlag = efNone;
                         break;
-                    case efNone:
-                        ei->Flags |= MathMode ? efMath : efNoMath;
                     }
                 }
             }
@@ -1521,7 +1522,8 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
             case 'W':          /* case 'X': */
             case 'Y':
             case 'Z':
-                if (!isalpha((unsigned char)*PrePtr) && (*PrePtr != '\\') && MathMode)
+                if (!isalpha((unsigned char)*PrePtr) && (*PrePtr != '\\') &&
+                    CurStkMode(&MathModeStack))
                 {
                     TmpPtr = BufPtr;
                     CmdPtr = CmdBuffer;
@@ -1613,12 +1615,12 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                       ((BufPtr[-1] == '.') || (BufPtr[-1] == ','))))
                     PSERR(PrePtr - Buf, 1, emSpacePunct);
 
-                if (MathMode &&
+                if (CurStkMode(&MathModeStack) &&
                     (((*BufPtr == '$') && (BufPtr[1] != '$')) ||
                      (!strafter(BufPtr, "\\)"))))
                     HEREA(1, emPunctMath, "outside inner");
 
-                if (!MathMode &&
+                if (!CurStkMode(&MathModeStack) &&
                     (((*PrePtr == '$') && (PrePtr[-1] == '$')) ||
                      (!strinfront(PrePtr, "\\]"))))
                     HEREA(1, emPunctMath, "inside display");
@@ -1765,9 +1767,8 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                                1, emFalsePage);
                 }
 
-                if (LATEX_SPACE(*BufPtr) && !MathMode &&
-                    !CheckSilentRegex() &&
-                    (strlen(CmdBuffer) != 2))
+                if (LATEX_SPACE(*BufPtr) && !CurStkMode(&MathModeStack) &&
+                    !CheckSilentRegex() && (strlen(CmdBuffer) != 2))
                 {
                     PSERR(BufPtr - Buf, 1, emSpaceTerm);
                 }
@@ -1829,7 +1830,14 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                         SKIP_AHEAD(TmpPtr, TmpC, (TmpC != '$' && TmpC != '\0'));
                         PSERR(BufPtr - Buf - 1, TmpPtr-BufPtr+2, emInlineMath);
                     }
-                    MathMode ^= TRUE;
+                    if (CurStkMode(&MathModeStack))
+                    {
+                        StkPop(&MathModeStack);
+                    }
+                    else
+                    {
+                        PushMode(TRUE, &MathModeStack);
+                    }
                 }
 
                 break;
@@ -1904,7 +1912,7 @@ void PrintStatus(unsigned long Lines)
         FreeErrInfo(ei);
     }
 
-    if (MathMode)
+    if (CurStkMode(&MathModeStack))
     {
         PrintError(emMathStillOn, CurStkName(&InputStack), "", 0L, 0L, Lines);
     }
@@ -1994,8 +2002,8 @@ PrintError(const enum ErrNum Error, const char *File, const char *String,
 
 #define RGTCTXT(Ctxt, Var) if((Context & Ctxt) && !(Var)) break;
 
-                RGTCTXT(ctInMath, MathMode);
-                RGTCTXT(ctOutMath, !MathMode);
+                RGTCTXT(ctInMath, CurStkMode(&MathModeStack));
+                RGTCTXT(ctOutMath, !CurStkMode(&MathModeStack));
                 RGTCTXT(ctInHead, InHeader);
                 RGTCTXT(ctOutHead, !InHeader);
 
@@ -2151,8 +2159,8 @@ static enum ErrNum PerformCommand(const char *Cmd, char *Arg)
         SKIP_AHEAD(Arg, TmpC, LATEX_SPACE(TmpC));
         if (*Arg == '{')
         {
-            MathFlag = MathMode ? efMath : efNoMath;
-            MathMode = 1;
+            /* We will actually turn on math mode when we enter the {} */
+            MathFlag = efMath;
         }
     }
     else if (HasWord(Cmd, &TextCmd))
@@ -2160,8 +2168,8 @@ static enum ErrNum PerformCommand(const char *Cmd, char *Arg)
         SKIP_AHEAD(Arg, TmpC, LATEX_SPACE(TmpC));
         if (*Arg == '{')
         {
-            MathFlag = MathMode ? efMath : efNoMath;
-            MathMode = 0;
+            /* We will actually turn on text mode when we enter the {} */
+            MathFlag = efNoMath;
         }
     }
     else if (*Cmd == '\\')
@@ -2171,11 +2179,11 @@ static enum ErrNum PerformCommand(const char *Cmd, char *Arg)
         {
         case '(':
         case '[':
-            MathMode = TRUE;
+            PushMode(TRUE, &MathModeStack);
             break;
         case ']':
         case ')':
-            MathMode = FALSE;
+            StkPop(&MathModeStack);
             break;
         case '/':
             switch (ItState)

@@ -332,7 +332,6 @@ extern FILE *OutputFile, *InputFile;
   DEF(int, AtLetter, FALSE); /* Whether `@' is a letter or not. */      \
   DEF(int, InHeader, TRUE);  /* Whether we're in the header */          \
   DEF(int, VerbMode, FALSE); /* Whether we're in complete ignore-mode */ \
-  DEF(long, MathMode, 0);    /* Whether we're in math mode or not */    \
   DEF(const char *, VerbStr, "");     /* String we'll terminate verbmode upon */ \
   DEF(unsigned long, ErrPrint, 0);    /* # errors printed */            \
   DEF(unsigned long, WarnPrint, 0);   /* # warnings printed */          \
@@ -345,6 +344,7 @@ STATE_VARS;
 #undef DEF
 extern struct Stack CharStack, InputStack, EnvStack, ConTeXtStack;
 extern struct Stack FileSuppStack, UserFileSuppStack;
+extern struct Stack MathModeStack;
 
 enum Quote
 {
