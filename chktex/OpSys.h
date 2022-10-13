@@ -218,6 +218,7 @@ struct WordList;
 extern const char *ReverseOn;
 extern const char *ReverseOff;
 extern char ConfigFile[BUFFER_SIZE];
+extern struct WordList ConfigFiles;
 
 int SetupVars(void);
 void SetupTerm(void);

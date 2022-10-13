@@ -344,6 +344,19 @@ static void ExpandTabs(char *From, char *To, long TSize, long MaxDiff)
     strcpy(To, From);
 }
 
+void ReadRcFiles(void)
+{
+    unsigned long i;
+    while (SetupVars())
+    {
+        InsertWord(ConfigFile, &ConfigFiles);
+    }
+    FORWL(i, ConfigFiles)
+    {
+        ReadRC(ConfigFiles.Stack.Data[i]);
+    }
+}
+
 
 int main(int argc, char **argv)
 {
@@ -379,8 +392,7 @@ int main(int argc, char **argv)
 
     RESOURCE_INFO
 
-    while (SetupVars())
-        ReadRC(ConfigFile);
+    ReadRcFiles();
 
     if (CmdLine.Stack.Used)
     {
@@ -692,6 +704,7 @@ static void ShowIntStatus(void)
 
     if (DebugLevel & (FLG_DbgListInfo | FLG_DbgListCont))
     {
+        ShowWL("ConfigFilesRead", &ConfigFiles);
         RESOURCE_INFO
     }
 

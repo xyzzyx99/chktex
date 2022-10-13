@@ -116,6 +116,8 @@ static char term_buffer[2048];
 #endif
 
 char ConfigFile[BUFFER_SIZE] = LOCALRCFILE;
+struct WordList ConfigFiles;
+
 const char *ReverseOn;
 const char *ReverseOff;
 
