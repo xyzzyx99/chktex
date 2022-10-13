@@ -181,6 +181,9 @@ Message 10 in Test.tex: Solo `)' found.
 Message 10 in Test.tex: Solo `)' found.
 )}{[])} }}}]]])))  
                 ^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+{[]} ((([[[{{{}}}]]])))  
+        ^^^
 Message 22 in Test.tex: Comment displayed.
 % Envs:  
 ^
@@ -583,6 +586,27 @@ For every $p\nmid n$ you have a cute prime which doesn't divide $n$.
 Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
 For every $p\nmid n$ you have a cute prime which doesn't divide $n$.  
                                                                 ^^^
+Message 22 in Test.tex: Comment displayed.
+% Warning about optional arguments inside optional arguments  
+^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+\begin{something}[\cite2[1231]{adadsd}]\end{something}  
+                 ^^^^^^^^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+[dasd{dasda[ ads[ dasd ]]}]  
+           ^^^^^^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+adssd[ {}[]]  
+     ^^^^^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+\begin{something}[\cite{adadsd}[1231]]\end{something}  
+                 ^^^^^^^^^^^^^^^
+Message 44 in Test.tex: User Regex: -3:Optional arguments [] inside optional arguments [] must be enclosed in {}.
+\begin{something}[ ][\cite{adadsd}[1231]]\end{something}  
+                    ^^^^^^^^^^^^^^^
+Message 22 in Test.tex: Comment displayed.
+% Shouldn't warn  
+^
 Message 22 in Test.tex: Comment displayed.
 % Math mode check  
 ^

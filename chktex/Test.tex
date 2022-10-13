@@ -226,6 +226,22 @@ You should always write a good introduction.
 For every $p\not|n$ you have an ugly prime which doesn't divide $n$.
 For every $p\nmid n$ you have a cute prime which doesn't divide $n$.
 
+% Warning about optional arguments inside optional arguments
+\begin{something}[\cite2[1231]{adadsd}]\end{something}
+[dasd{dasda[ ads[ dasd ]]}]
+adssd[ {}[]]
+\begin{something}[\cite{adadsd}[1231]]\end{something}
+\begin{something}[ ][\cite{adadsd}[1231]]\end{something}
+
+% Shouldn't warn
+\begin{something}[{\cite{adadsd}[1231]}]\end{something}
+\begin{something}[{\cite{{adadsd}}[1231]}]\end{something}
+\begin{something}[{\cite{adadsd}[1231]}]\end{something}
+\begin{something}[ ]{\cite{adadsd}[1231]}\end{something}
+\begin{something}[ ][{\cite{adadsd}[1231]}]\end{something}
+\begin{something}[{} ]{\cite{adadsd}[1231]}\end{something}
+
+
 % Math mode check
 \ensuremath{sin x\text{is not the same as sin x, but is the same as $sin x$}}
 Also, $x(3)\text{ is not x(3) but it is $x(3)$}$

@@ -584,6 +584,12 @@ Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
 For every $p\nmid n$ you have a cute prime which doesn't divide $n$.  
                                                                 ^^^
 Message 22 in Test.tex: Comment displayed.
+% Warning about optional arguments inside optional arguments  
+^
+Message 22 in Test.tex: Comment displayed.
+% Shouldn't warn  
+^
+Message 22 in Test.tex: Comment displayed.
 % Math mode check  
 ^
 Message 35 in Test.tex: You should perhaps use `\sin' instead.
