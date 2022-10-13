@@ -142,6 +142,7 @@ static const char *HelpText =
     "    -i  --license   : Show distribution information\n"
     "    -l  --localrc   : Read local .chktexrc formatted file.\n"
     "    -d  --debug     : Debug information. A bit field with 5 bits.\n"
+    "                      Each bit shows a different type of information.\n"
     "    -r  --reset     : Reset settings to default.\n"
     "    -S  --set       : Read it's argument as if from chktexrc.\n"
     "                      e.g., -S TabSize=8 will override the TabSize.\n"
