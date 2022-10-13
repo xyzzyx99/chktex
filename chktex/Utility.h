@@ -89,12 +89,6 @@ struct FileNode
     unsigned long Line;
 };
 
-/* Rotates x n bits left (should be an int, long, etc.) */
-#define ROTATEL(x,n) ((x<<n) | (x>>((CHAR_BIT*sizeof(x)) - n)))
-
-/* Rotates x n bits right (should be an int, long, etc.) */
-#define ROTATER(x,n) ((x>>n) | (x<<((CHAR_BIT*sizeof(x)) - n)))
-
 /* Subtract 1 because sizeof includes the null terminator.
  * WARNING: To use this on a variable, the type should be char[]
  * rather than char*, since for some versions of gcc these give
