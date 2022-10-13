@@ -63,6 +63,7 @@ RESOURCE_INFO
 #undef LNEMPTY
 #undef LIST
 int ReadRC(const char *);
+int ReadRCFromCmdLine(const char *CmdLineArg);
 
 
 #endif /* RESOURCE */

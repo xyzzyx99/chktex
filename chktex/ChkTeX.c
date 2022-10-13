@@ -143,6 +143,8 @@ static const char *HelpText =
     "    -l  --localrc   : Read local .chktexrc formatted file.\n"
     "    -d  --debug     : Debug information. A bit field with 5 bits.\n"
     "    -r  --reset     : Reset settings to default.\n"
+    "    -S  --set       : Read it's argument as if from chktexrc.\n"
+    "                      e.g., -S TabSize=8 will override the TabSize.\n"
     "\n"
     "Muting warning messages:\n"
     "~~~~~~~~~~~~~~~~~~~~~~~~\n"
@@ -837,6 +839,7 @@ static int ParseArgs(int argc, char **argv)
         {"pipeverb", optional_argument, 0L, 'V'},
         {"debug", required_argument, 0L, 'd'},
         {"reset", no_argument, 0L, 'r'},
+        {"set", required_argument, 0L, 'S'},
         {"quiet", no_argument, 0L, 'q'},
         {"license", no_argument, 0L, 'i'},
         {"splitchar", required_argument, 0L, 's'},
@@ -873,7 +876,7 @@ static int ParseArgs(int argc, char **argv)
 
     while (!ArgErr &&
            ((c = getopt_long((int) argc, argv,
-                             "b::d:e:f:g::hH::I::il:m:n:Lo:p:qrs:t::v::V::w:Wx::",
+                             "b::d:e:f:g::hH::I::il:m:n:Lo:p:qrs:S:t::v::V::w:Wx::",
                              long_options, &option_index)) != EOF))
     {
         while (c)
@@ -881,6 +884,10 @@ static int ParseArgs(int argc, char **argv)
             nextc = 0;
             switch (c)
             {
+            case 'S':
+                ReadRCFromCmdLine(optarg);
+                break;
+
             case 's':
                 if (!(Delimit = strdup(optarg)))
                 {
