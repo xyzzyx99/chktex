@@ -412,7 +412,11 @@ static void PerformEnv(char *Env, int Begin)
         if (Begin)
             PushMode(TRUE, &MathModeStack);
         else
+        {
+            if (!CurStkMode(&MathModeStack))
+                PSERRA(BufPtr - Buf - 4, 1, emMathModeConfusion, "on");
             StkPop(&MathModeStack);
+        }
     }
 
     if (HasWord(Env, &TextEnvir))
@@ -420,7 +424,11 @@ static void PerformEnv(char *Env, int Begin)
         if (Begin)
             PushMode(FALSE, &MathModeStack);
         else
+        {
+            if (CurStkMode(&MathModeStack))
+                PSERRA(BufPtr - Buf - 4, 1, emMathModeConfusion, "off");
             StkPop(&MathModeStack);
+        }
     }
 
     if (Begin && HasWord(Env, &VerbEnvir))
@@ -2183,6 +2191,9 @@ static enum ErrNum PerformCommand(const char *Cmd, char *Arg)
             break;
         case ']':
         case ')':
+            if (!CurStkMode(&MathModeStack))
+                PSERRA(BufPtr - Buf - 2, 1, emMathModeConfusion, "on");
+
             StkPop(&MathModeStack);
             break;
         case '/':
