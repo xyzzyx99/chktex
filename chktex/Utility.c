@@ -829,8 +829,27 @@ unsigned long CurStkLine(struct Stack *stack)
         return (LastLine);
 }
 
+long CurStkMode(struct Stack *stack)
+{
+    long * Mode;
+    if ((Mode = StkTop(stack)))
+        return *Mode;
+    /* printf("Empty stack\n"); */
+    return FALSE;
+}
 
+long *PushMode(long mode, struct Stack *stack)
+{
+    long *m;
 
+    if ((m = malloc(sizeof(long))))
+    {
+        *m = mode;
+        StkPush(m, stack);
+        return m;
+    }
+    return NULL;
+}
 /************************** CHARACTER STACK ******************************/
 
 /*

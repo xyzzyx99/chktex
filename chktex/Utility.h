@@ -126,6 +126,8 @@ void *StkTop(struct Stack *Stack);
 FILE *CurStkFile(struct Stack *stack);
 const char *CurStkName(struct Stack *stack);
 unsigned long CurStkLine(struct Stack *stack);
+long CurStkMode(struct Stack *stack);
+long *PushMode(long mode, struct Stack *stack);
 char *FGetsStk(char *Dest, unsigned long len, struct Stack *stack);
 int PushFileName(const char *Name, struct Stack *stack);
 int PushFile(const char *, FILE *, struct Stack *);
