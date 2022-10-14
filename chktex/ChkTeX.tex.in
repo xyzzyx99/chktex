@@ -1375,7 +1375,6 @@ keyword in the \rsrc\ file which controls the discussed warning.
   derivations of that, ignore all text on the same line as
   \verb@\end{verbatim}@.  This will warn you about this.
 
-
 \end{errdesc}
 
 \fmted{Use ` to begin quotation, not '.}\hfill\\
@@ -1627,6 +1626,18 @@ keyword in the \rsrc\ file which controls the discussed warning.
 
   Similar to warnings~9 and 10, these tracks environments, but Con\TeX{}t{} environments rather than \LaTeX.
   They are tracked as separate messages to allow being turned on and off independently thereby allowing people to use macros that start with \verb+\start+.
+
+\end{errdesc}
+
+\begin{errdesc}{Expected math mode to be \%s here.}
+
+  Similar to warning~16, this warns when \chktex{} got confused about math mode.
+  In theory, for a well formed \LaTeX{} document this should never happen, but the following (invalid) documents will cause the warning.
+  This is because the \verb+$+ will exit math mode (which \verb+\ensuremath+ entered), and then exiting \verb+\ensuremath+ finds that we are in text mode which shouldn't happen.
+
+  \begin{errexam}
+    \verb+\ensuremath{ \frac{x}{3} $ y\times 7}+\\*
+  \end{errexam}
 
 \end{errdesc}
 
