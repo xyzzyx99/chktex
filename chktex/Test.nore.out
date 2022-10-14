@@ -674,6 +674,9 @@ Message 22 in Test.tex: Comment displayed.
 % WipeArg  
 ^
 Message 22 in Test.tex: Comment displayed.
+% Bug 60197 -- "double math mode" should be handled okay  
+^
+Message 22 in Test.tex: Comment displayed.
 % Warning 16,15  
 ^
 Message 45 in Test.tex: Use \[ ... \] instead of $$ ... $$.

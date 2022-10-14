@@ -283,6 +283,15 @@ In section~\ref{sec:4} it is suppressed. % chktex -1
 % WipeArg
 \autocite[34-35]{text--1---1}
 
+% Bug 60197 -- "double math mode" should be handled okay
+\begin{align}
+    \begin{array} {l}
+        abc
+    \end{array} \\
+    3 - 2 = 1
+    \pi
+\end{align}
+
 % Warning 16,15
 
 $$(
