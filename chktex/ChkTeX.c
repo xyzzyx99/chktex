@@ -174,7 +174,7 @@ static const char *HelpText =
     "    -x  --wipeverb  : Ignore contents of `\\verb' commands.\n"
     "    -g  --globalrc  : Read global .chktexrc file.\n"
     "    -I  --inputfiles: Execute \\input statements.\n"
-    "    -H  --headererr : Show errors found in front of \\begin{document}\n"
+    "    -H  --headererr : Show errors found before \\begin{document}\n"
     "\n"
     "Miscellaneous switches:\n"
     "~~~~~~~~~~~~~~~~~~~~~~~\n"
