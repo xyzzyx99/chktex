@@ -9,6 +9,7 @@ usage() {
 
 if [ "x$1" = x ] || [ "x$2" = x ]; then
     usage
+    exit 1
 fi
 
 builddir="$(cd $1; pwd)"
@@ -33,6 +34,35 @@ check_results() {
 }
 
 
+# We don't check in the test files because CTAN can't handle files
+# with the same names, and we need several that are named chktexrc.
+# Also, they don't like invisible files (start with '.') so we
+# generate those as well.
+echo ">>> Generating test files..."
+mkdir -p $testsdir/sub
+cat > $testsdir/sub/chktexrc <<EOF
+OutFormat
+{
+"loaded chktex/tests/sub %f!n"
+}
+EOF
+
+mkdir -p $testsdir/sub1/.config
+cat > $testsdir/sub1/.config/chktexrc <<EOF
+OutFormat
+{
+"loaded chktex/tests/sub1/.config/chktexrc %f!n"
+}
+EOF
+
+cat > $testsdir/sub2/.chktexrc <<EOF
+OutFormat
+{
+"loaded chktex/tests/sub2/.chktexrc %f!n"
+}
+EOF
+
+# Run the actual tests for inclusion
 echo ">>> Testing that inclusion works correctly..."
 # absolute path
 rm -f "$output"
