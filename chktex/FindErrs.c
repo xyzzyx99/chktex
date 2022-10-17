@@ -1465,14 +1465,14 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                 TmpPtr = PrePtr;
 
                 SKIP_BACK(TmpPtr, TmpC,
-                          (LATEX_SPACE(TmpC) || strchr("{}$", TmpC)));
+                          (LATEX_SPACE(TmpC) || strchr("$", TmpC)));
 
                 if (isdigit((unsigned char)*TmpPtr))
                 {
                     TmpPtr = BufPtr;
 
                     SKIP_AHEAD(TmpPtr, TmpC,
-                               (LATEX_SPACE(TmpC) || strchr("{}$", TmpC)));
+                               (LATEX_SPACE(TmpC) || strchr("$", TmpC)));
 
                     if (isdigit((unsigned char)*TmpPtr))
                         HERE(1, emUseTimes);
