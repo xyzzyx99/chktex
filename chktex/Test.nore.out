@@ -421,6 +421,12 @@ The program opens a screen sized 640x200 pixels
 Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
 The program opens a screen sized $640\times200$ pixels  
                                  ^^^^^^^^^^^^^^
+Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
+Approximately $\frac{2x}{1+x}$ $x$s shouldn't be errors.  
+              ^^^^^^^^^^^^^^^^
+Message 46 in Test.tex: Use \( ... \) instead of $ ... $.
+Approximately $\frac{2x}{1+x}$ $x$s shouldn't be errors.  
+                               ^^^
 Message 22 in Test.tex: Comment displayed.
 % Warning 30  
 ^
