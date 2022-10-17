@@ -126,16 +126,6 @@ dnl Checks for libraries.
 AC_CHECK_LIB(termlib, tgetent)
 AC_CHECK_LIB(termcap, tgetent)
 
-dnl Checks for header files.
-m4_warn([obsolete],
-[The preprocessor macro `STDC_HEADERS' is obsolete.
-  Except in unusual embedded environments, you can safely include all
-  ISO C90 headers unconditionally.])dnl
-# Autoupdate added the next two lines to ensure that your configure
-# script's behavior did not change.  They are probably safe to remove.
-AC_CHECK_INCLUDES_DEFAULT
-AC_PROG_EGREP
-
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(limits.h stat.h strings.h stdarg.h dnl
 sys/stat.h termcap.h termlib.h unistd.h)
