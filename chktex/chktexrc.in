@@ -386,6 +386,7 @@ OutFormat
 ### \begin{chktexrclistvar*}{Silent}
 #
 # Commands which should not trigger a warning if terminated by a space.
+# This warning will not trigger in math mode.
 #
 # You can also specify regular expressions in the @verb@[]@endverb@
 # section in case you have many custom macros that can be safely
