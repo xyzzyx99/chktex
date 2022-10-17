@@ -39,8 +39,8 @@ tar xzvf "$FILE" -C "$BASEDIR" --strip-components 1
 rm "$FILE"
 
 # Prepare version for release
-if [ -f $BASEDIR/autogen.sh ]; then
-	pushd $BASEDIR
+if [ -f "$BASEDIR/autogen.sh" ]; then
+	pushd "$BASEDIR"
 	./autogen.sh || exit 1
     rm -rf autom4te.cache/
     if [ "x$2" != "x" ]; then
