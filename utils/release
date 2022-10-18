@@ -4,6 +4,7 @@ PROJ=chktex
 VERSION=$1
 TAG=version-$VERSION
 GUSER=$(git config user.email | cut -d'@' -f1)
+SAVANNAH_USER=${SAVANNAH_USER-$GUSER}
 
 if [ -z "$VERSION" ]; then
 	echo "No version given."
@@ -62,7 +63,7 @@ echo "Now we GPG sign the release:"
 echo gpg --detach --sign "$FILE" || exit 1
 
 echo "And upload to savannah"
-scp "$FILE" "$FILE.sig" $GUSER@dl.sv.gnu.org:/releases/chktex
+scp "$FILE" "$FILE.sig" $SAVANNAH_USER@dl.sv.gnu.org:/releases/chktex
 if [ $? != 0 ]; then
     echo "Uploading failed!"
     exit 1
