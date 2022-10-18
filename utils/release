@@ -60,7 +60,7 @@ rm -rf "$BASEDIR"
 
 # Sign the tar.gz
 echo "Now we GPG sign the release:"
-echo gpg --detach --sign "$FILE" || exit 1
+gpg --detach --sign "$FILE" || exit 1
 
 echo "And upload to savannah"
 scp "$FILE" "$FILE.sig" $SAVANNAH_USER@dl.sv.gnu.org:/releases/chktex
