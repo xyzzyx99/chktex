@@ -682,7 +682,7 @@ Message 22 in Test.tex: Comment displayed.
 Message 44 in Test.tex: User Regex: -2:Vertical rules in tables are ugly.
 \begin{tabular*}{1.0\linewidth}[h]{|c|cc|}  
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Message 44 in Test.tex: User Regex: -2:Use \toprule, midrule, or \bottomrule from booktabs.
+Message 44 in Test.tex: User Regex: -2:Use \toprule, \midrule, or \bottomrule from booktabs.
   \hline  
   ^^^^^^
 Message 22 in Test.tex: Comment displayed.
