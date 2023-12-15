@@ -314,7 +314,7 @@ UserWarnRegex
     # but I wonder if it's worth the complexity...
     (?!#-2:Vertical! rules! in! tables! are! ugly)\\begin\{(array|tabularx?\*?)\}(\[.*\])?\{.*\|.*\}
 
-    PCRE:(?!#-3:Optional! arguments! []! inside! optional! arguments! []! must! be! enclosed! in! {})\[(?!![^\]\[{}]*{(?!![^\]\[{}]*}))[^\]]*\[
+    (?!#-3:Optional! arguments! []! inside! optional! arguments! []! must! be! enclosed! in! {})PCRE:\[(?!![^\]\[{}]*{(?!![^\]\[{}]*}))[^\]]*\[
 
 }
 ### \end{verbatim}
