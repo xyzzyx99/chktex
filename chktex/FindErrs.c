@@ -1586,11 +1586,22 @@ int FindErr(const char *_RealBuf, const unsigned long _Line)
                                     strchr(LTX_BosPunc, TmpC)));
                         if (islower((unsigned char)*TmpPtr))
                         {
+                            /* If it's a silent macro, count it as space. */
+                            int IsSilent = FALSE;
+                            if (*(TmpPtr - 1) == '\\')
+                            {
+                                GetLTXToken(TmpPtr - 1, CmdBuffer);
+                                IsSilent = CheckSilentRegex();
+                            }
+
                             /* Ignore spacing problems after commands if desired */
                             TmpPtr = PrePtr;
                             SKIP_BACK(TmpPtr, TmpC, istex(TmpC));
-                            if (*TmpPtr != '\\' || (CmdSpace & csInterWord))
+                            if (!IsSilent &&
+                                (*TmpPtr != '\\' || (CmdSpace & csInterWord)))
+                            {
                                 PSERR(BufPtr - Buf, 1, emInterWord);
+                            }
                         }
                         else
                             CheckAbbrevs(&BufPtr[-1]);

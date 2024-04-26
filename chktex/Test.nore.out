@@ -293,6 +293,9 @@ Message 22 in Test.tex: Comment displayed.
 % ignore commands by default  
 ^
 Message 22 in Test.tex: Comment displayed.
+% Bug 65500  
+^
+Message 22 in Test.tex: Comment displayed.
 % Warning 13  
 ^
 Message 13 in Test.tex: Intersentence spacing (`\@') should perhaps be used.
