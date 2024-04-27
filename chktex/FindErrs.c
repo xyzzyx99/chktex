@@ -662,7 +662,7 @@ static void PerformBigCmd(char *CmdPtr)
             PSERR(CmdPtr - Buf, CmdLen, emNoArgFound);
     }
 
-    if (HasWord(CmdBuffer, &NotPreSpaced) && isspace((unsigned char)CmdPtr[-1]))
+    if (HasWord(CmdBuffer, &NotPreSpaced) && SeenSpace)
         PSERRA(CmdPtr - Buf - 1, 1, emRemPSSpace, CmdBuffer);
 
     if ((TmpPtr = HasWord(CmdBuffer, &NoCharNext)))
