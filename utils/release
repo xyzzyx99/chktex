@@ -70,3 +70,4 @@ if [ $? != 0 ]; then
 fi
 
 echo "Now update the website (index.html and ChkTeX.pdf), and upload to CTAN"
+cp chktex/ChkTeX.pdf chktex-web/
