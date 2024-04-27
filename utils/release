@@ -63,7 +63,7 @@ echo "Now we GPG sign the release:"
 gpg --detach --sign "$FILE" || exit 1
 
 echo "And upload to savannah"
-scp "$FILE" "$FILE.sig" $SAVANNAH_USER@dl.sv.gnu.org:/releases/chktex
+rsync -tv "$FILE" "$FILE.sig" $SAVANNAH_USER@dl.sv.gnu.org:/releases/chktex
 if [ $? != 0 ]; then
     echo "Uploading failed!"
     exit 1
