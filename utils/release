@@ -8,7 +8,7 @@ SAVANNAH_USER=${SAVANNAH_USER-$GUSER}
 
 if [ -z "$VERSION" ]; then
 	echo "No version given."
-    echo "Remember to change the version in configure.in and update NEWS"
+    echo "Remember to change the version in configure.ac and update NEWS"
 	exit 1
 fi
 
@@ -47,6 +47,10 @@ if [ -f "$BASEDIR/autogen.sh" ]; then
     if [ "x$2" != "x" ]; then
         echo Adding $2 to the tarball
         cp "$2" . || exit 1
+    else
+        echo
+        echo "** Consider adding $PWD/chktex/ChkTeX.pdf to the tarball passing as a second argument **"
+        echo
     fi
 	popd
 else
@@ -56,6 +60,17 @@ fi
 
 # (Re)create tar.gz file
 tar cvhzf "$FILE" "$BASEDIR/"
+
+# Create a CTAN friendly tarball (no version in the directory name)
+if which gtar; then
+    # mv "$BASEDIR" chktex
+    gtar cvhzf "ctan-$FILE" "$BASEDIR" --transform "s/${BASEDIR%/}/chktex/"
+else
+    echo
+    echo "** GNU tar not found, consider installing to create CTAN friendly tar file **"
+    echo
+fi
+
 rm -rf "$BASEDIR"
 
 # Sign the tar.gz
@@ -69,5 +84,7 @@ if [ $? != 0 ]; then
     exit 1
 fi
 
-echo "Now update the website (index.html and ChkTeX.pdf), and upload to CTAN"
 cp chktex/ChkTeX.pdf chktex-web/
+echo "Now update the website (index.html and ChkTeX.pdf), and upload to CTAN"
+echo "Remember that CTAN wants a tar file with just chktex, no version as the directory"
+echo "You can see previous answers to the many questions at https://ctan.org/pkg/chktex"
