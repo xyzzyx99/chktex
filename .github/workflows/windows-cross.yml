@@ -36,7 +36,7 @@ jobs:
           cp -a chktex /tmp/chktex-i686
           cd /tmp/chktex-i686
           CC=i686-w64-mingw32-gcc \
-          CPPFLAGS='-DWIN32 -DTEX_LIVE' \
+          CPPFLAGS='-DWIN32' \
           CFLAGS='-O2 -DNDEBUG' \
             ./configure --host=i686-w64-mingw32 --disable-pcre --disable-posixre --disable-debug-info
           make -j2
@@ -51,13 +51,15 @@ jobs:
           cp -a chktex /tmp/chktex-x64
           cd /tmp/chktex-x64
           CC=x86_64-w64-mingw32-gcc \
-          CPPFLAGS='-DWIN32 -DTEX_LIVE' \
+          CPPFLAGS='-DWIN32' \
           CFLAGS='-O3 -flto -DNDEBUG' \
           LDFLAGS='-flto' \
             ./configure --host=x86_64-w64-mingw32 --disable-pcre --disable-posixre --disable-debug-info
           make -j2
           test -s chktex.exe
           file chktex.exe
+          # Ensure the executable does not rely on undefined Kpathsea symbols.
+          ! x86_64-w64-mingw32-nm -u chktex.exe | grep -i kpse_
           x86_64-w64-mingw32-objdump -f chktex.exe | grep -E 'pei-x86-64|pe-x86-64'
           mkdir -p "$GITHUB_WORKSPACE/dist"
           cp chktex.exe chktexrc "$GITHUB_WORKSPACE/dist/"
