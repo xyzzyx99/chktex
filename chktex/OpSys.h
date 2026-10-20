@@ -115,13 +115,13 @@
 #else /* TEX_LIVE */
 #if defined(__unix__)
 #  define  SLASH  '/'
-#elif defined(__MSDOS__)
+#elif defined(__MSDOS__) || defined(WIN32) || defined(_WIN32)
 #  define SLASH   '\\'
 #endif
 
 #if defined(__unix__)
 #  define DIRCHARS "/"
-#elif defined(__MSDOS__)
+#elif defined(__MSDOS__) || defined(WIN32) || defined(_WIN32)
 #  define DIRCHARS ":\\"
 #endif
 #endif /* TEX_LIVE */
