@@ -123,7 +123,7 @@ AC_PATH_PROG(LYNX, lynx)
 AC_PATH_PROG(LATEX2HTML, latex2html)
 
 dnl Checks for libraries.
-AC_SEARCH_LIBS(tgetent, [termcap termlib], [], [AC_MSG_ERROR([termcap library not found])])
+AC_SEARCH_LIBS(tgetent, [termcap termlib], [], [AC_MSG_WARN([termcap library not found; terminal highlighting disabled])])
 
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(limits.h stat.h strings.h stdarg.h dnl

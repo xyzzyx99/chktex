@@ -59,7 +59,7 @@ SHELL=/bin/sh
 BUILT_SCRIPTS=@BUILT_SCRIPTS@
 SCRIPTS=@SCRIPTS@
 
-USRDEFS=-DSYSCONFDIR=\"$(sysconfdir)\" -D__unix__
+USRDEFS=-DSYSCONFDIR=\"$(sysconfdir)\"
 
 VPATH=$(srcdir)
 

@@ -1,0 +1,83 @@
+name: Windows cross-build (MinGW-w64)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-cross:
+    name: Linux to Windows (x86 probe, x64 release)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install cross-compilers and build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gcc-mingw-w64-i686 gcc-mingw-w64-x86-64 \
+            binutils-mingw-w64-i686 binutils-mingw-w64-x86-64 \
+            autoconf automake make perl zip file
+
+      - name: Generate configure script
+        working-directory: chktex
+        run: ./autogen.sh
+
+      - name: Probe Windows x86 (32-bit) cross-compile
+        id: x86
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cp -a chktex /tmp/chktex-i686
+          cd /tmp/chktex-i686
+          CC=i686-w64-mingw32-gcc \
+          CPPFLAGS='-DWIN32 -DTEX_LIVE' \
+          CFLAGS='-O2 -DNDEBUG' \
+            ./configure --host=i686-w64-mingw32 --disable-pcre --disable-posixre --disable-debug-info
+          make -j2
+          test -s chktex.exe
+          file chktex.exe
+          i686-w64-mingw32-objdump -f chktex.exe | grep -E 'pei-i386|pe-i386'
+
+      - name: Build Windows x64 (optimized)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cp -a chktex /tmp/chktex-x64
+          cd /tmp/chktex-x64
+          CC=x86_64-w64-mingw32-gcc \
+          CPPFLAGS='-DWIN32 -DTEX_LIVE' \
+          CFLAGS='-O3 -flto -DNDEBUG' \
+          LDFLAGS='-flto' \
+            ./configure --host=x86_64-w64-mingw32 --disable-pcre --disable-posixre --disable-debug-info
+          make -j2
+          test -s chktex.exe
+          file chktex.exe
+          x86_64-w64-mingw32-objdump -f chktex.exe | grep -E 'pei-x86-64|pe-x86-64'
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          cp chktex.exe chktexrc "$GITHUB_WORKSPACE/dist/"
+          printf 'ChkTeX Windows x64 built on Linux using MinGW-w64.\nPlace chktexrc alongside chktex.exe.\n' \
+            > "$GITHUB_WORKSPACE/dist/README.txt"
+          cd "$GITHUB_WORKSPACE/dist"
+          zip -9 "$GITHUB_WORKSPACE/chktex-windows-x64.zip" chktex.exe chktexrc README.txt
+
+      - name: Summarize architecture checks
+        if: always()
+        shell: bash
+        run: |
+          echo '## Windows cross-compilation' >> "$GITHUB_STEP_SUMMARY"
+          echo '32-bit x86 probe: `${{ steps.x86.outcome }}`' >> "$GITHUB_STEP_SUMMARY"
+          echo '64-bit x64 is the release artifact target.' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Windows x64 package
+        uses: actions/upload-artifact@v4
+        with:
+          name: chktex-windows-x64
+          path: chktex-windows-x64.zip
+          if-no-files-found: error
+          retention-days: 30
